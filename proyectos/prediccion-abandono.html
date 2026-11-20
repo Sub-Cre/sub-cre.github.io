@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predicción de abandono (churn) · Oscar Arnez</title>
+<meta name="description" content="Un servicio de internet y TV pierde a uno de cada tres clientes. El equipo de retención no puede llamar a todos, así que necesita una lista ordenada por riesgo y una explicación de qué está detrás de las bajas.">
+<meta property="og:title" content="Predicción de abandono (churn) · Oscar Arnez">
+<meta property="og:description" content="Un servicio de internet y TV pierde a uno de cada tres clientes. El equipo de retención no puede llamar a todos, así que necesita una lista ordenada por riesgo y una explicación de qué está detrás de las bajas.">
+<meta property="og:image" content="https://sub-cre.github.io/assets/preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="shell top-in">
+    <a class="sig" href="../index.html">Oscar Arnez Loayza</a>
+    <nav aria-label="Secciones">
+      <a href="../index.html#trabajo">Trabajo</a>
+      <a href="../index.html#experiencia">Experiencia</a>
+      <a href="../index.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+<main class="shell case">
+  <p class="back"><a href="../index.html#trabajo">← Trabajo seleccionado</a></p>
+  <header class="case-head">
+    <h1>Predicción de abandono de clientes de un servicio por suscripción</h1>
+    <p class="lede">Un servicio de internet y TV pierde a uno de cada tres clientes. El equipo de retención no puede llamar a todos, así que necesita una lista ordenada por riesgo y una explicación de qué está detrás de las bajas.</p>
+    <dl class="meta">
+      <div><dt>Pregunta</dt><dd>¿A qué clientes debería llamar primero el equipo de retención y por qué se van?</dd></div>
+      <div><dt>Técnica</dt><dd>scikit-learn, validación cruzada</dd></div>
+      <div><dt>Datos</dt><dd>7.000 clientes, simulados</dd></div>
+      <div><dt>Código</dt><dd><a href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/05-prediccion-abandono-clientes" target="_blank" rel="noopener">05-prediccion-abandono-clientes</a></dd></div>
+    </dl>
+  </header>
+
+  <figure class="feature wide">
+    <img src="../assets/churn.jpg" alt="Tablero del proyecto: Predicción de abandono de clientes de un servicio por suscripción">
+    <figcaption><span class="mono">Fig. 1</span> Tablero generado por el código del proyecto.</figcaption>
+  </figure>
+
+  <div class="prose">
+    <h2>Contexto</h2>
+    <p>El objetivo no era tener el modelo más complejo, sino uno que el equipo pudiera usar cada mes y entender. Por eso comparé un modelo simple con uno más flexible y me quedé con el que rendía igual y se explica mejor.</p>
+    <h2>Datos</h2>
+    <p>7.000 clientes con tipo de contrato, plan, antigüedad, cargo mensual, método de pago, tickets de soporte, pagos atrasados y uso de la app. Datos simulados con efectos definidos de antemano, lo que permite comprobar que el modelo encuentra los factores correctos.</p>
+    <h2>Qué hice</h2>
+    <ol>
+      <li>Preprocesamiento dentro de un Pipeline (One-Hot y estandarización), para que la partición de prueba no influya en el ajuste.</li>
+      <li>Partición estratificada 75/25 y validación cruzada de cinco pliegues sobre el entrenamiento.</li>
+      <li>Comparación de regresión logística y Random Forest. La logística tuvo AUC 0,807 en validación cruzada contra 0,795 del Random Forest.</li>
+      <li>Importancia por permutación sobre la partición de prueba, para saber en qué variables se apoya el modelo.</li>
+      <li>Curva de ganancia acumulada y una lista de clientes con probabilidad de baja mayor a 0,6.</li>
+    </ol>
+    <h2>Resultados</h2>
+    <div class="table-wrap"><table>
+      <tr><th scope="row">Tasa de abandono</th><td class="mono">33 %</td></tr>
+      <tr><th scope="row">AUC en prueba (logística)</th><td class="mono">0,82</td></tr>
+      <tr><th scope="row">AUC en prueba (Random Forest)</th><td class="mono">0,81</td></tr>
+      <tr><th scope="row">Bajas detectadas llamando al 20 % más riesgoso</th><td class="mono">42 %</td></tr>
+      <tr><th scope="row">Abandono con contrato mensual</th><td class="mono">50 %</td></tr>
+      <tr><th scope="row">Abandono con contrato bianual</th><td class="mono">7 %</td></tr>
+    </table></div>
+    <h2>Qué recomendaría</h2>
+    <ul>
+      <li>El tipo de contrato es el factor de mayor peso, seguido de la antigüedad, los tickets de soporte, los pagos atrasados y el uso de la app.</li>
+      <li>Ofrecer pasar del contrato mensual al anual con un descuento ataca la causa principal.</li>
+      <li>El segundo ticket de soporte y el primer pago atrasado sirven como alertas tempranas para llamar al cliente.</li>
+    </ul>
+    <h2>Extracto del código</h2>
+    <p class="code-label mono">src/modelo.py</p>
+    <pre><code>def preprocesador():
+    return ColumnTransformer([
+        (&quot;cat&quot;, OneHotEncoder(handle_unknown=&quot;ignore&quot;), CATEGORICAS),
+        (&quot;num&quot;, StandardScaler(), NUMERICAS),
+    ])
+
+pipe = Pipeline([(&quot;prep&quot;, preprocesador()),
+                 (&quot;clf&quot;, LogisticRegression(max_iter=2000))])
+cv_auc = cross_val_score(pipe, X_tr, y_tr, cv=cv, scoring=&quot;roc_auc&quot;)</code></pre>
+    <p><a href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/05-prediccion-abandono-clientes" target="_blank" rel="noopener">Ver el proyecto completo en GitHub</a>, con instrucciones para ejecutarlo.</p>
+  </div>
+
+  <nav class="pager" aria-label="Otros proyectos">
+    <a href="analisis-sql-ecommerce.html"><small>Anterior</small>Retención y segmentación en SQL</a>
+    <a href="reporte-financiero-automatizado.html" class="next"><small>Siguiente</small>Reporte financiero automatizado</a>
+  </nav>
+</main>
+<footer class="shell foot">
+  <span>Oscar Arnez Loayza · Sucre, Bolivia</span>
+  <span class="mono">Actualizado en noviembre de 2026</span>
+</footer>
+</body>
+</html>

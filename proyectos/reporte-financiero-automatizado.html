@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reporte financiero automatizado · Oscar Arnez</title>
+<meta name="description" content="El área contable de una pyme exporta los movimientos del sistema y pasa horas copiando, sumando y dando formato a un Excel. El script hace ese trabajo completo: valida el archivo, calcula el estado de resultados y entrega un Excel con formato y gráficos que se pueden editar.">
+<meta property="og:title" content="Reporte financiero automatizado · Oscar Arnez">
+<meta property="og:description" content="El área contable de una pyme exporta los movimientos del sistema y pasa horas copiando, sumando y dando formato a un Excel. El script hace ese trabajo completo: valida el archivo, calcula el estado de resultados y entrega un Excel con formato y gráficos que se pueden editar.">
+<meta property="og:image" content="https://sub-cre.github.io/assets/preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="shell top-in">
+    <a class="sig" href="../index.html">Oscar Arnez Loayza</a>
+    <nav aria-label="Secciones">
+      <a href="../index.html#trabajo">Trabajo</a>
+      <a href="../index.html#experiencia">Experiencia</a>
+      <a href="../index.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+<main class="shell case">
+  <p class="back"><a href="../index.html#trabajo">← Trabajo seleccionado</a></p>
+  <header class="case-head">
+    <h1>Reporte financiero mensual automatizado en Excel</h1>
+    <p class="lede">El área contable de una pyme exporta los movimientos del sistema y pasa horas copiando, sumando y dando formato a un Excel. El script hace ese trabajo completo: valida el archivo, calcula el estado de resultados y entrega un Excel con formato y gráficos que se pueden editar.</p>
+    <dl class="meta">
+      <div><dt>Pregunta</dt><dd>¿Cómo dejar de armar a mano, cada mes, el estado de resultados para gerencia?</dd></div>
+      <div><dt>Técnica</dt><dd>Python, openpyxl, línea de comandos</dd></div>
+      <div><dt>Datos</dt><dd>1.302 movimientos, simulados</dd></div>
+      <div><dt>Código</dt><dd><a href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/02-reporte-financiero-automatizado" target="_blank" rel="noopener">02-reporte-financiero-automatizado</a></dd></div>
+    </dl>
+  </header>
+
+  <figure class="feature wide">
+    <img src="../assets/finanzas.jpg" alt="Tablero del proyecto: Reporte financiero mensual automatizado en Excel">
+    <figcaption><span class="mono">Fig. 1</span> Tablero generado por el código del proyecto.</figcaption>
+  </figure>
+
+  <div class="prose">
+    <h2>Contexto</h2>
+    <p>En YPFB automaticé tareas parecidas y el ahorro de tiempo fue de alrededor de 30 %. Este proyecto reproduce ese tipo de trabajo con datos públicos de ejemplo.</p>
+    <h2>Datos</h2>
+    <p>1.302 movimientos de 2025 (fecha, tipo, cuenta, monto) de una pyme de servicios simulada, con crecimiento mensual de ingresos y campañas de marketing en marzo y septiembre.</p>
+    <h2>Qué hice</h2>
+    <ol>
+      <li>Valida la entrada: si faltan columnas o el tipo de movimiento no es Ingreso o Gasto, se detiene con un mensaje claro.</li>
+      <li>Calcula ingresos, gastos, resultado y margen por mes, y el estado de resultados por cuenta.</li>
+      <li>Escribe el Excel con openpyxl: tres hojas, encabezados con color, formato de miles, filtros, paneles inmovilizados y dos gráficos nativos.</li>
+      <li>Acepta otros archivos por parámetro, así se puede programar para que corra solo cada mes.</li>
+    </ol>
+    <h2>Resultados</h2>
+    <div class="table-wrap"><table>
+      <tr><th scope="row">Ingresos del año</th><td class="mono">$1,21 M</td></tr>
+      <tr><th scope="row">Gastos del año</th><td class="mono">$0,80 M</td></tr>
+      <tr><th scope="row">Margen neto</th><td class="mono">33,6 %</td></tr>
+      <tr><th scope="row">Margen más bajo</th><td class="mono">enero, 21,5 %</td></tr>
+      <tr><th scope="row">Margen más alto</th><td class="mono">diciembre, 45,2 %</td></tr>
+      <tr><th scope="row">Peso de sueldos en el gasto</th><td class="mono">51 %</td></tr>
+    </table></div>
+    <h2>Qué recomendaría</h2>
+    <ul>
+      <li>El margen sube durante el año porque los ingresos crecen y los costos fijos se mantienen.</li>
+      <li>Los picos de gasto de marzo y septiembre coinciden con las campañas de marketing, algo que en el reporte manual pasaba desapercibido.</li>
+    </ul>
+    <h2>Extracto del código</h2>
+    <p class="code-label mono">src/generar_reporte.py</p>
+    <pre><code>python src/generar_reporte.py \
+    --entrada movimientos_noviembre.csv \
+    --salida reporte_noviembre.xlsx</code></pre>
+    <p><a href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/02-reporte-financiero-automatizado" target="_blank" rel="noopener">Ver el proyecto completo en GitHub</a>, con instrucciones para ejecutarlo.</p>
+  </div>
+
+  <nav class="pager" aria-label="Otros proyectos">
+    <a href="prediccion-abandono.html"><small>Anterior</small>Predicción de abandono (churn)</a>
+    <a href="ventas-retail.html" class="next"><small>Siguiente</small>Ventas y rentabilidad retail</a>
+  </nav>
+</main>
+<footer class="shell foot">
+  <span>Oscar Arnez Loayza · Sucre, Bolivia</span>
+  <span class="mono">Actualizado en noviembre de 2026</span>
+</footer>
+</body>
+</html>

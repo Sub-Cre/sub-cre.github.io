@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ventas y rentabilidad retail · Oscar Arnez</title>
+<meta name="description" content="Una tienda con cuatro categorías y cuatro regiones veía las ventas en planillas separadas. Consolidé las transacciones de un año en un tablero que muestra ventas, ganancia y margen en una sola página.">
+<meta property="og:title" content="Ventas y rentabilidad retail · Oscar Arnez">
+<meta property="og:description" content="Una tienda con cuatro categorías y cuatro regiones veía las ventas en planillas separadas. Consolidé las transacciones de un año en un tablero que muestra ventas, ganancia y margen en una sola página.">
+<meta property="og:image" content="https://sub-cre.github.io/assets/preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="shell top-in">
+    <a class="sig" href="../index.html">Oscar Arnez Loayza</a>
+    <nav aria-label="Secciones">
+      <a href="../index.html#trabajo">Trabajo</a>
+      <a href="../index.html#experiencia">Experiencia</a>
+      <a href="../index.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+<main class="shell case">
+  <p class="back"><a href="../index.html#trabajo">← Trabajo seleccionado</a></p>
+  <header class="case-head">
+    <h1>Ventas y rentabilidad de una cadena retail</h1>
+    <p class="lede">Una tienda con cuatro categorías y cuatro regiones veía las ventas en planillas separadas. Consolidé las transacciones de un año en un tablero que muestra ventas, ganancia y margen en una sola página.</p>
+    <dl class="meta">
+      <div><dt>Pregunta</dt><dd>¿Qué categorías y regiones generan la ganancia y dónde se pierde margen?</dd></div>
+      <div><dt>Técnica</dt><dd>Pandas, Matplotlib</dd></div>
+      <div><dt>Datos</dt><dd>21.680 transacciones, simulados</dd></div>
+      <div><dt>Código</dt><dd><a href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/01-dashboard-ventas-retail" target="_blank" rel="noopener">01-dashboard-ventas-retail</a></dd></div>
+    </dl>
+  </header>
+
+  <figure class="feature wide">
+    <img src="../assets/ventas.jpg" alt="Tablero del proyecto: Ventas y rentabilidad de una cadena retail">
+    <figcaption><span class="mono">Fig. 1</span> Tablero generado por el código del proyecto.</figcaption>
+  </figure>
+
+  <div class="prose">
+    <h2>Contexto</h2>
+    <p>Gerencia miraba sobre todo las ventas. Al cruzarlas con la ganancia apareció una región que vende tanto como las demás pero deja menos margen.</p>
+    <h2>Datos</h2>
+    <p>21.680 transacciones de 2025 con fecha, categoría, región, unidades, venta y ganancia. Datos simulados con estacionalidad y una región con más descuentos.</p>
+    <h2>Qué hice</h2>
+    <ol>
+      <li>Agregué ventas, ganancia y margen por mes, categoría y región.</li>
+      <li>Calculé los indicadores principales: ventas, ganancia, margen promedio y ticket promedio.</li>
+      <li>Los textos del tablero se calculan desde los datos, así se actualizan solos si cambia el archivo.</li>
+    </ol>
+    <h2>Resultados</h2>
+    <div class="table-wrap"><table>
+      <tr><th scope="row">Ventas</th><td class="mono">$8,74 M</td></tr>
+      <tr><th scope="row">Ganancia</th><td class="mono">$2,24 M</td></tr>
+      <tr><th scope="row">Margen promedio</th><td class="mono">25,6 %</td></tr>
+      <tr><th scope="row">Ticket promedio</th><td class="mono">$403</td></tr>
+      <tr><th scope="row">Participación de Tecnología en ventas</th><td class="mono">55 %</td></tr>
+      <tr><th scope="row">Margen de Moda</th><td class="mono">44 %</td></tr>
+    </table></div>
+    <h2>Qué recomendaría</h2>
+    <ul>
+      <li>Tecnología vende más, pero Moda deja el mayor margen: conviene darle más visibilidad.</li>
+      <li>Occidente queda 6 puntos de margen por debajo del resto. Antes de abrir más puntos ahí, hay que revisar descuentos y costos de envío.</li>
+    </ul>
+    <h2>Extracto del código</h2>
+    <p class="code-label mono">src/analisis.py</p>
+    <pre><code>por_reg = df.groupby(&quot;region&quot;)[[&quot;venta&quot;, &quot;ganancia&quot;]].sum()
+por_reg[&quot;margen&quot;] = por_reg.ganancia / por_reg.venta * 100
+reg_baja = por_reg.margen.idxmin()
+brecha = por_reg.drop(reg_baja).margen.mean() - por_reg.margen.min()</code></pre>
+    <p><a href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/01-dashboard-ventas-retail" target="_blank" rel="noopener">Ver el proyecto completo en GitHub</a>, con instrucciones para ejecutarlo.</p>
+  </div>
+
+  <nav class="pager" aria-label="Otros proyectos">
+    <a href="reporte-financiero-automatizado.html"><small>Anterior</small>Reporte financiero automatizado</a>
+    <a href="mercado-inmobiliario.html" class="next"><small>Siguiente</small>Mercado inmobiliario</a>
+  </nav>
+</main>
+<footer class="shell foot">
+  <span>Oscar Arnez Loayza · Sucre, Bolivia</span>
+  <span class="mono">Actualizado en noviembre de 2026</span>
+</footer>
+</body>
+</html>

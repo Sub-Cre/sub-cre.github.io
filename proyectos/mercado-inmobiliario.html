@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mercado inmobiliario · Oscar Arnez</title>
+<meta name="description" content="Basado en el tipo de trabajo que hice para NORA, una startup inmobiliaria de Colombia: ordenar publicaciones de inmuebles y convertirlas en indicadores para decidir dónde comprar.">
+<meta property="og:title" content="Mercado inmobiliario · Oscar Arnez">
+<meta property="og:description" content="Basado en el tipo de trabajo que hice para NORA, una startup inmobiliaria de Colombia: ordenar publicaciones de inmuebles y convertirlas en indicadores para decidir dónde comprar.">
+<meta property="og:image" content="https://sub-cre.github.io/assets/preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="shell top-in">
+    <a class="sig" href="../index.html">Oscar Arnez Loayza</a>
+    <nav aria-label="Secciones">
+      <a href="../index.html#trabajo">Trabajo</a>
+      <a href="../index.html#experiencia">Experiencia</a>
+      <a href="../index.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+<main class="shell case">
+  <p class="back"><a href="../index.html#trabajo">← Trabajo seleccionado</a></p>
+  <header class="case-head">
+    <h1>Mercado inmobiliario para inversionistas</h1>
+    <p class="lede">Basado en el tipo de trabajo que hice para NORA, una startup inmobiliaria de Colombia: ordenar publicaciones de inmuebles y convertirlas en indicadores para decidir dónde comprar.</p>
+    <dl class="meta">
+      <div><dt>Pregunta</dt><dd>¿En qué zona conviene invertir según el precio por m² y lo que tarda en venderse una propiedad?</dd></div>
+      <div><dt>Técnica</dt><dd>Pandas, Matplotlib</dd></div>
+      <div><dt>Datos</dt><dd>1.694 publicaciones, simulados</dd></div>
+      <div><dt>Código</dt><dd><a href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/06-mercado-inmobiliario" target="_blank" rel="noopener">06-mercado-inmobiliario</a></dd></div>
+    </dl>
+  </header>
+
+  <figure class="feature wide">
+    <img src="../assets/inmobiliario.jpg" alt="Tablero del proyecto: Mercado inmobiliario para inversionistas">
+    <figcaption><span class="mono">Fig. 1</span> Tablero generado por el código del proyecto.</figcaption>
+  </figure>
+
+  <div class="prose">
+    <h2>Contexto</h2>
+    <p>Un inversionista compara cuatro zonas. Le interesan dos cosas: cuánto cuesta entrar y qué tan rápido podría vender si lo necesita.</p>
+    <h2>Datos</h2>
+    <p>1.694 publicaciones simuladas de 2025 con zona, tipo de inmueble, superficie, precio por m², precio y días publicada.</p>
+    <h2>Qué hice</h2>
+    <ol>
+      <li>Usé medianas en lugar de promedios, porque unas pocas propiedades de lujo distorsionan el promedio.</li>
+      <li>Seguí la evolución mensual del precio por m² en cada zona.</li>
+      <li>Medí la liquidez con los días promedio en venta y comparé precio contra superficie por tipo de inmueble.</li>
+    </ol>
+    <h2>Resultados</h2>
+    <div class="table-wrap"><table>
+      <tr><th scope="row">Precio mediano por m²</th><td class="mono">$1.247</td></tr>
+      <tr><th scope="row">Variación en el año</th><td class="mono">+5,1 %</td></tr>
+      <tr><th scope="row">Ticket mediano</th><td class="mono">$128.000</td></tr>
+      <tr><th scope="row">Días promedio en venta</th><td class="mono">49</td></tr>
+      <tr><th scope="row">Descuento de la periferia por m²</th><td class="mono">37 %</td></tr>
+      <tr><th scope="row">Prima de departamentos por m²</th><td class="mono">4 %</td></tr>
+    </table></div>
+    <h2>Qué recomendaría</h2>
+    <ul>
+      <li>Zona Norte y Centro son más caras pero se venden en menos de 45 días: menos riesgo de quedarse con la propiedad.</li>
+      <li>La periferia cuesta 37 % menos por m² y tarda 63 días en venderse. Sirve más para comprar y alquilar que para revender rápido.</li>
+    </ul>
+    <h2>Extracto del código</h2>
+    <p class="code-label mono">src/analisis.py</p>
+    <pre><code>zonas = df.groupby(&quot;zona&quot;).agg(
+    publicaciones=(&quot;precio&quot;, &quot;size&quot;),
+    precio_m2_mediano=(&quot;precio_m2&quot;, &quot;median&quot;),
+    dias_promedio=(&quot;dias_en_venta&quot;, &quot;mean&quot;),
+)</code></pre>
+    <p><a href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/06-mercado-inmobiliario" target="_blank" rel="noopener">Ver el proyecto completo en GitHub</a>, con instrucciones para ejecutarlo.</p>
+  </div>
+
+  <nav class="pager" aria-label="Otros proyectos">
+    <a href="ventas-retail.html"><small>Anterior</small>Ventas y rentabilidad retail</a>
+    <a href="limpieza-base-clientes.html" class="next"><small>Siguiente</small>Limpieza de una base de clientes</a>
+  </nav>
+</main>
+<footer class="shell foot">
+  <span>Oscar Arnez Loayza · Sucre, Bolivia</span>
+  <span class="mono">Actualizado en noviembre de 2026</span>
+</footer>
+</body>
+</html>
