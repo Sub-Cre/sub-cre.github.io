@@ -77,7 +77,7 @@
   if (clock) {
     var tick = function () {
       try {
-        clock.textContent = new Intl.DateTimeFormat("es-BO", { hour: "2-digit", minute: "2-digit", timeZone: "America/La_Paz", hour12: false }).format(new Date()) + " hora local";
+        clock.textContent = new Intl.DateTimeFormat("es-BO", { hour: "2-digit", minute: "2-digit", timeZone: "America/La_Paz", hour12: false }).format(new Date()) + " h";
       } catch (e) { clock.textContent = "GMT−4"; }
     };
     tick(); setInterval(tick, 30000);
