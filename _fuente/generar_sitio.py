@@ -242,6 +242,7 @@ def head(titulo, desc, raiz=""):
 
 def cabecera(raiz=""):
     return f"""<header class="top">
+  <div class="progress" aria-hidden="true"></div>
   <div class="shell top-in">
     <a class="sig" href="{raiz}index.html">Oscar Arnez Loayza</a>
     <nav aria-label="Secciones">
@@ -254,11 +255,12 @@ def cabecera(raiz=""):
 """
 
 
-def pie():
+def pie(raiz=""):
     return f"""<footer class="shell foot">
   <span>Oscar Arnez Loayza · Sucre, Bolivia</span>
   <span class="mono">Actualizado en noviembre de 2026</span>
 </footer>
+<script src="{raiz}site.js" defer></script>
 </body>
 </html>
 """
@@ -274,6 +276,12 @@ def index():
         <span class="r-metric"><b class="mono">{escape(p['metrica'])}</b><small>{escape(p['metrica_label'])}</small></span>
       </a>""")
     destacado = PROYECTOS[0]
+    calidad = [("Nombre", 34.2, 100.0), ("Email", 60.7, 90.2), ("Teléfono", 15.4, 95.2),
+               ("Ciudad", 26.4, 100.0), ("Fecha", 42.0, 97.4), ("Monto", 45.7, 100.0)]
+    q_rows = "\n".join(
+        f'      <div class="q-row" data-antes="{a}" data-despues="{d}"><span class="q-label">{c}</span>'
+        f'<span class="q-track"><span class="q-fill" style="--w:{a}%"></span></span>'
+        f'<span class="q-val mono">{round(a)} %</span></div>' for c, a, d in calidad)
     html = head("Oscar Arnez Loayza · Analista de datos",
                 "Analista de datos en Sucre, Bolivia. Limpieza de bases, reportes automatizados en Excel y Python, SQL, Power BI y modelos predictivos. Trabajo remoto.")
     html += cabecera()
@@ -296,6 +304,14 @@ def index():
     <div><dt>Herramientas</dt><dd>Power BI, Excel, Python, SQL, Tableau</dd></div>
     <div><dt>Idiomas</dt><dd>Español nativo, inglés intermedio</dd></div>
   </dl>
+  <figure class="sorter" id="sorter">
+    <div class="sorter-bar">
+      <p class="ledger mono" aria-live="polite"><span>registros <b data-k="reg">2.016</b></span><span>duplicados <b data-k="dup">218</b></span><span>clientes únicos <b data-k="uni">1.798</b></span></p>
+      <button type="button" class="replay" id="replay">Repetir</button>
+    </div>
+    <canvas id="sorter-canvas" aria-label="Animación: puntos desordenados que representan registros se fusionan cuando están duplicados y se ordenan en columnas por ciudad"></canvas>
+    <figcaption><span class="mono">Fig. 0</span> Una base de 2.016 registros con duplicados y formatos mezclados, ordenada en 1.798 clientes por ciudad. Cada punto representa 6 clientes. Datos del <a href="proyectos/limpieza-base-clientes.html">proyecto de limpieza</a>.</figcaption>
+  </figure>
 </section>
 
 <section id="trabajo" class="block">
@@ -303,9 +319,18 @@ def index():
     <h2>Trabajo seleccionado</h2>
     <p>Seis proyectos con el código y la documentación completos. Usan datos simulados para poder publicarlos sin exponer información de clientes.</p>
   </div>
-  <figure class="feature">
-    <a href="proyectos/{destacado['slug']}.html"><img src="assets/{destacado['img']}" alt="{escape(destacado['titulo'])}" loading="lazy"></a>
-    <figcaption><span class="mono">Fig. 1</span> {escape(destacado['titulo'])}. Calidad de cada campo antes y después del pipeline.</figcaption>
+  <figure class="quality" id="quality">
+    <div class="q-head">
+      <p class="q-title">% de registros con cada campo en formato estándar</p>
+      <div class="seg" role="group" aria-label="Estado de la base">
+        <button type="button" data-state="antes" aria-pressed="true">Base original</button>
+        <button type="button" data-state="despues" aria-pressed="false">Después del pipeline</button>
+      </div>
+    </div>
+    <div class="q-rows">
+{q_rows}
+    </div>
+    <figcaption><span class="mono">Fig. 1</span> {escape(destacado['titulo'])}. Promedio de los seis campos: <b class="mono" data-avg>37 %</b>. <a href="proyectos/{destacado['slug']}.html">Ver el caso completo</a>.</figcaption>
   </figure>
   <div class="index" role="list">
     <div class="row head" aria-hidden="true"><span>Proyecto</span><span>Técnica</span><span>Datos</span><span>Resultado</span></div>
@@ -398,7 +423,7 @@ def caso(i, p):
   </nav>
 </main>
 """
-    html += pie()
+    html += pie("../")
     (SITE / "proyectos" / f"{p['slug']}.html").write_text(html, encoding="utf-8")
 
 
@@ -411,13 +436,14 @@ CSS = """/* Layout: hoja de trabajo de un analista. Columna de lectura a la izqu
   --rule:#d9dee2;
   --accent:#1f5fae;     /* azul de los gráficos, solo para enlaces y cifras */
   --tint:#e9eff6;
+  --warm:#d0632f;     /* duplicados / estado "antes" */
   --display:"Archivo", "Arial Narrow", system-ui, sans-serif;
   --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
-  :root{--paper:#12161b;--ink:#e6eaee;--ink-soft:#a3adb8;--rule:#2a323b;--accent:#7fb0ec;--tint:#1a2533;color-scheme:dark}
+  :root{--paper:#12161b;--ink:#e6eaee;--ink-soft:#a3adb8;--rule:#2a323b;--accent:#7fb0ec;--tint:#1a2533;--warm:#e58a5c;color-scheme:dark}
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -536,6 +562,40 @@ pre{margin:0;overflow-x:auto;background:var(--tint);border-left:3px solid var(--
   .pager .next{text-align:left}
 }
 @media (prefers-reduced-motion:no-preference){a.row{transition:background .15s}}
+
+/* barra superior fija con progreso de lectura */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper)}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0))}
+
+/* Fig. 0: base desordenada que se ordena */
+.sorter{grid-column:1/-1;margin:8px 0 0;border-top:2px solid var(--ink);padding-top:12px}
+.sorter-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.ledger{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13px;color:var(--ink-soft);margin:0}
+.ledger b{color:var(--ink);font-weight:500}
+.ledger span.on b{color:var(--accent)}
+.replay{font:500 13px var(--mono);color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:3px;padding:5px 10px;cursor:pointer}
+.replay:hover{color:var(--ink);border-color:var(--ink-soft)}
+.replay:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#sorter-canvas{display:block;width:100%;height:300px;margin-top:10px}
+
+/* Fig. 1: calidad antes / después */
+.quality{margin:0 0 40px;border-top:2px solid var(--ink);padding-top:14px}
+.q-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.q-title{font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.seg button{font:500 13.5px var(--body);background:none;border:0;padding:7px 12px;color:var(--ink-soft);cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.q-rows{display:grid;gap:10px}
+.q-row{display:grid;grid-template-columns:90px minmax(0,1fr) 64px;gap:14px;align-items:center}
+.q-label{font-size:15px;color:var(--ink-soft)}
+.q-track{height:14px;background:var(--tint);position:relative}
+.q-fill{position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--warm);transition:width .9s cubic-bezier(.65,0,.35,1),background-color .6s}
+.quality.done .q-fill{background:var(--accent)}
+.q-val{text-align:right;font-size:15px}
+.quality figcaption a{white-space:nowrap}
+@media (max-width:560px){#sorter-canvas{height:260px}.q-row{grid-template-columns:72px minmax(0,1fr) 52px;gap:10px}}
+@media (prefers-reduced-motion:reduce){.q-fill{transition:none}}
 """
 
 FAVICON = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="4" fill="#14191f"/><path d="M9 23V15M16 23V9M23 23V18" stroke="#7fb0ec" stroke-width="3.2" stroke-linecap="square"/></svg>"""

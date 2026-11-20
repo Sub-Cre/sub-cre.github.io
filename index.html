@@ -15,6 +15,7 @@
 </head>
 <body>
 <header class="top">
+  <div class="progress" aria-hidden="true"></div>
   <div class="shell top-in">
     <a class="sig" href="index.html">Oscar Arnez Loayza</a>
     <nav aria-label="Secciones">
@@ -43,6 +44,14 @@
     <div><dt>Herramientas</dt><dd>Power BI, Excel, Python, SQL, Tableau</dd></div>
     <div><dt>Idiomas</dt><dd>Español nativo, inglés intermedio</dd></div>
   </dl>
+  <figure class="sorter" id="sorter">
+    <div class="sorter-bar">
+      <p class="ledger mono" aria-live="polite"><span>registros <b data-k="reg">2.016</b></span><span>duplicados <b data-k="dup">218</b></span><span>clientes únicos <b data-k="uni">1.798</b></span></p>
+      <button type="button" class="replay" id="replay">Repetir</button>
+    </div>
+    <canvas id="sorter-canvas" aria-label="Animación: puntos desordenados que representan registros se fusionan cuando están duplicados y se ordenan en columnas por ciudad"></canvas>
+    <figcaption><span class="mono">Fig. 0</span> Una base de 2.016 registros con duplicados y formatos mezclados, ordenada en 1.798 clientes por ciudad. Cada punto representa 6 clientes. Datos del <a href="proyectos/limpieza-base-clientes.html">proyecto de limpieza</a>.</figcaption>
+  </figure>
 </section>
 
 <section id="trabajo" class="block">
@@ -50,9 +59,23 @@
     <h2>Trabajo seleccionado</h2>
     <p>Seis proyectos con el código y la documentación completos. Usan datos simulados para poder publicarlos sin exponer información de clientes.</p>
   </div>
-  <figure class="feature">
-    <a href="proyectos/limpieza-base-clientes.html"><img src="assets/limpieza.jpg" alt="Limpieza y estandarización de una base de clientes" loading="lazy"></a>
-    <figcaption><span class="mono">Fig. 1</span> Limpieza y estandarización de una base de clientes. Calidad de cada campo antes y después del pipeline.</figcaption>
+  <figure class="quality" id="quality">
+    <div class="q-head">
+      <p class="q-title">% de registros con cada campo en formato estándar</p>
+      <div class="seg" role="group" aria-label="Estado de la base">
+        <button type="button" data-state="antes" aria-pressed="true">Base original</button>
+        <button type="button" data-state="despues" aria-pressed="false">Después del pipeline</button>
+      </div>
+    </div>
+    <div class="q-rows">
+      <div class="q-row" data-antes="34.2" data-despues="100.0"><span class="q-label">Nombre</span><span class="q-track"><span class="q-fill" style="--w:34.2%"></span></span><span class="q-val mono">34 %</span></div>
+      <div class="q-row" data-antes="60.7" data-despues="90.2"><span class="q-label">Email</span><span class="q-track"><span class="q-fill" style="--w:60.7%"></span></span><span class="q-val mono">61 %</span></div>
+      <div class="q-row" data-antes="15.4" data-despues="95.2"><span class="q-label">Teléfono</span><span class="q-track"><span class="q-fill" style="--w:15.4%"></span></span><span class="q-val mono">15 %</span></div>
+      <div class="q-row" data-antes="26.4" data-despues="100.0"><span class="q-label">Ciudad</span><span class="q-track"><span class="q-fill" style="--w:26.4%"></span></span><span class="q-val mono">26 %</span></div>
+      <div class="q-row" data-antes="42.0" data-despues="97.4"><span class="q-label">Fecha</span><span class="q-track"><span class="q-fill" style="--w:42.0%"></span></span><span class="q-val mono">42 %</span></div>
+      <div class="q-row" data-antes="45.7" data-despues="100.0"><span class="q-label">Monto</span><span class="q-track"><span class="q-fill" style="--w:45.7%"></span></span><span class="q-val mono">46 %</span></div>
+    </div>
+    <figcaption><span class="mono">Fig. 1</span> Limpieza y estandarización de una base de clientes. Promedio de los seis campos: <b class="mono" data-avg>37 %</b>. <a href="proyectos/limpieza-base-clientes.html">Ver el caso completo</a>.</figcaption>
   </figure>
   <div class="index" role="list">
     <div class="row head" aria-hidden="true"><span>Proyecto</span><span>Técnica</span><span>Datos</span><span>Resultado</span></div>
@@ -123,5 +146,6 @@
   <span>Oscar Arnez Loayza · Sucre, Bolivia</span>
   <span class="mono">Actualizado en noviembre de 2026</span>
 </footer>
+<script src="site.js" defer></script>
 </body>
 </html>
