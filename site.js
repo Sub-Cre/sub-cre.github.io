@@ -212,7 +212,7 @@
   }
 
   size(); draw(0);
-  var go = function () { onView(cv, start, 0.3); };
+  var go = function () { onView(cv, start, 0.12); };
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(go); else go();
   document.getElementById("replay").addEventListener("click", start);
   addEventListener("resize", function () { if (!running) { size(); draw(done ? T_END : 0); } });
