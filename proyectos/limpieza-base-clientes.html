@@ -11,7 +11,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=1795145200">
+<link rel="stylesheet" href="../style.css?v=1795145447">
+<script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
 <header class="top">
@@ -20,6 +21,7 @@
     <a class="sig" href="../index.html">Oscar Arnez Loayza</a>
     <nav aria-label="Secciones">
       <a href="../index.html#trabajo">Trabajo</a>
+      <a href="../index.html#servicios">Servicios</a>
       <a href="../index.html#experiencia">Experiencia</a>
       <a href="../index.html#contacto">Contacto</a>
     </nav>
@@ -28,7 +30,7 @@
 <main class="shell case">
   <p class="back"><a href="../index.html#trabajo">← Trabajo seleccionado</a></p>
   <header class="case-head">
-    <h1>Limpieza y estandarización de una base de clientes</h1>
+    <h1 style="view-transition-name:t-limpieza-base-clientes">Limpieza y estandarización de una base de clientes</h1>
     <p class="lede">Una base cargada por distintas personas y formularios: teléfonos en seis formatos, ciudades escritas de cinco maneras, montos con coma o punto decimal y el mismo cliente repetido. Armé un pipeline que la deja lista para usar y que se puede volver a correr con la exportación del mes siguiente.</p>
     <dl class="meta">
       <div><dt>Pregunta</dt><dd>¿Cómo dejar una base exportada del CRM sin duplicados y con formatos estándar?</dd></div>
@@ -38,18 +40,18 @@
     </dl>
   </header>
 
-  <figure class="feature wide">
+  <figure class="feature wide zoomable reveal">
     <img src="../assets/limpieza.jpg" alt="Tablero del proyecto: Limpieza y estandarización de una base de clientes">
     <figcaption><span class="mono">Fig. 1</span> Tablero generado por el código del proyecto.</figcaption>
   </figure>
 
   <div class="prose">
-    <h2>Contexto</h2>
+    <h2 class="reveal">Contexto</h2>
     <p>Es el pedido más común que veo en proyectos freelance: una empresa quiere hacer una campaña, migrar a otro CRM o simplemente contar cuántos clientes tiene, y la base no lo permite. Arreglarla a mano en Excel funciona una vez, pero el mes siguiente llega otra exportación con los mismos problemas.</p>
     <p>Por eso lo resolví como un pipeline: cada regla de limpieza es una función de Python con pruebas, y el proceso completo se ejecuta con un comando.</p>
-    <h2>Datos</h2>
+    <h2 class="reveal">Datos</h2>
     <p>2.016 registros con nombre, correo, teléfono, ciudad, fecha de registro y monto de compras. La base se generó por simulación con 1.800 clientes distintos más 216 duplicados con variaciones, para poder medir si el pipeline encuentra exactamente a los clientes que existen.</p>
-    <h2>Qué hice</h2>
+    <h2 class="reveal">Qué hice</h2>
     <ol>
       <li>Estandaricé cada campo: nombres con mayúsculas consistentes, correos en minúscula y validados, teléfonos al formato +591 7XXXXXXX, ciudades contra un catálogo, fechas a AAAA-MM-DD y montos a número decimal.</li>
       <li>Si un valor no se puede interpretar, queda vacío. El pipeline no completa datos que no estaban.</li>
@@ -57,8 +59,8 @@
       <li>De cada grupo conservé el registro más completo y rellené sus vacíos con los datos de los duplicados.</li>
       <li>Separé en una hoja aparte los 56 clientes sin contacto válido o con fecha ilegible, para que los revise una persona.</li>
     </ol>
-    <h2>Resultados</h2>
-    <div class="table-wrap"><table>
+    <h2 class="reveal">Resultados</h2>
+    <div class="table-wrap"><table class="ruled">
       <tr><th scope="row">Registros de entrada</th><td class="mono">2.016</td></tr>
       <tr><th scope="row">Clientes únicos</th><td class="mono">1.798</td></tr>
       <tr><th scope="row">Duplicados fusionados</th><td class="mono">218</td></tr>
@@ -66,12 +68,12 @@
       <tr><th scope="row">Campos en formato estándar, después</th><td class="mono">97 %</td></tr>
       <tr><th scope="row">Pruebas automáticas</th><td class="mono">37</td></tr>
     </table></div>
-    <h2>Qué recomendaría</h2>
+    <h2 class="reveal">Qué recomendaría</h2>
     <ul>
       <li>El pipeline encontró 1.798 de los 1.800 clientes. Las 2 fusiones de más son clientes distintos que en la simulación recibieron el mismo correo, el mismo criterio que usaría un CRM.</li>
       <li>Lo que falta para llegar al 100 % en correo y teléfono son datos que venían vacíos o inválidos de origen. Quedan señalados, no inventados.</li>
     </ul>
-    <h2>Extracto del código</h2>
+    <h2 class="reveal">Extracto del código</h2>
     <p class="code-label mono">src/limpieza.py</p>
     <pre><code>def normalizar_telefono(valor):
     &quot;&quot;&quot;Cualquier formato de celular boliviano -&gt; &#x27;+591 7XXXXXXX&#x27;.&quot;&quot;&quot;
@@ -95,6 +97,6 @@
   <span>Oscar Arnez Loayza · Sucre, Bolivia</span>
   <span class="mono">Actualizado en noviembre de 2026</span>
 </footer>
-<script src="../site.js?v=1795145200" defer></script>
+<script src="../site.js?v=1795145447" defer></script>
 </body>
 </html>

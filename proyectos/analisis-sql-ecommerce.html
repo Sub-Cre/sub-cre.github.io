@@ -11,7 +11,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=1795145200">
+<link rel="stylesheet" href="../style.css?v=1795145447">
+<script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
 <header class="top">
@@ -20,6 +21,7 @@
     <a class="sig" href="../index.html">Oscar Arnez Loayza</a>
     <nav aria-label="Secciones">
       <a href="../index.html#trabajo">Trabajo</a>
+      <a href="../index.html#servicios">Servicios</a>
       <a href="../index.html#experiencia">Experiencia</a>
       <a href="../index.html#contacto">Contacto</a>
     </nav>
@@ -28,7 +30,7 @@
 <main class="shell case">
   <p class="back"><a href="../index.html#trabajo">← Trabajo seleccionado</a></p>
   <header class="case-head">
-    <h1>Retención y segmentación de clientes de un e-commerce en SQL</h1>
+    <h1 style="view-transition-name:t-analisis-sql-ecommerce">Retención y segmentación de clientes de un e-commerce en SQL</h1>
     <p class="lede">Una tienda online con 4.000 clientes y dos años de pedidos. Todo el análisis está escrito en SQL: ventas mensuales, ranking de productos, retención por cohorte, segmentación RFM y recompra por canal de adquisición.</p>
     <dl class="meta">
       <div><dt>Pregunta</dt><dd>¿El negocio crece porque los clientes vuelven o solo porque llegan clientes nuevos?</dd></div>
@@ -38,18 +40,18 @@
     </dl>
   </header>
 
-  <figure class="feature wide">
+  <figure class="feature wide zoomable reveal">
     <img src="../assets/sql.jpg" alt="Tablero del proyecto: Retención y segmentación de clientes de un e-commerce en SQL">
     <figcaption><span class="mono">Fig. 1</span> Tablero generado por el código del proyecto.</figcaption>
   </figure>
 
   <div class="prose">
-    <h2>Contexto</h2>
+    <h2 class="reveal">Contexto</h2>
     <p>Los ingresos de la tienda crecieron 143 % de un año a otro. La pregunta del dueño era si ese crecimiento se sostiene solo, o si depende de seguir comprando tráfico.</p>
     <p>Escribí cinco consultas sobre una base relacional de cuatro tablas. Python solo ejecuta las consultas y dibuja los gráficos, así el análisis se puede llevar a PostgreSQL o MySQL casi sin cambios.</p>
-    <h2>Datos</h2>
+    <h2 class="reveal">Datos</h2>
     <p>Base SQLite con las tablas clientes (4.000), productos (60), pedidos (6.965) y detalle_pedido (17.479). Datos simulados con tasas de recompra distintas por canal y popularidad desigual de productos.</p>
-    <h2>Qué hice</h2>
+    <h2 class="reveal">Qué hice</h2>
     <ol>
       <li>KPIs mensuales con variación respecto al mes anterior usando LAG().</li>
       <li>Top 3 productos por categoría con RANK() OVER (PARTITION BY categoria) y su peso dentro de la categoría.</li>
@@ -57,8 +59,8 @@
       <li>Segmentación RFM con NTILE(5) para recencia y monto. La frecuencia va con umbrales fijos, porque la mayoría compra una sola vez y NTILE repartiría esos empates al azar.</li>
       <li>Recompra y valor de vida por canal de adquisición.</li>
     </ol>
-    <h2>Resultados</h2>
-    <div class="table-wrap"><table>
+    <h2 class="reveal">Resultados</h2>
+    <div class="table-wrap"><table class="ruled">
       <tr><th scope="row">Ingresos 2025</th><td class="mono">$1,22 M</td></tr>
       <tr><th scope="row">Crecimiento vs 2024</th><td class="mono">+143 %</td></tr>
       <tr><th scope="row">Retención al mes 1</th><td class="mono">16 %</td></tr>
@@ -66,13 +68,13 @@
       <tr><th scope="row">Campeones + Leales</th><td class="mono">11 % de clientes, 26 % de ingresos</td></tr>
       <tr><th scope="row">Recompra: Referidos vs Google Ads</th><td class="mono">53 % vs 30 %</td></tr>
     </table></div>
-    <h2>Qué recomendaría</h2>
+    <h2 class="reveal">Qué recomendaría</h2>
     <ul>
       <li>El crecimiento depende de clientes nuevos. Un flujo de correos para la segunda compra (días 7, 21 y 45) es la palanca más barata.</li>
       <li>Un cliente Campeón generó $1.315 en promedio, cuatro veces más que uno Perdido. Hay 190 clientes En riesgo que compraban seguido y dejaron de hacerlo.</li>
       <li>Los clientes referidos recompran casi el doble que los de Google Ads: parte de ese presupuesto rendiría más en un programa de referidos.</li>
     </ul>
-    <h2>Extracto del código</h2>
+    <h2 class="reveal">Extracto del código</h2>
     <p class="code-label mono">sql/04_segmentacion_rfm.sql</p>
     <pre><code>puntaje AS (
     SELECT *,
@@ -95,6 +97,6 @@
   <span>Oscar Arnez Loayza · Sucre, Bolivia</span>
   <span class="mono">Actualizado en noviembre de 2026</span>
 </footer>
-<script src="../site.js?v=1795145200" defer></script>
+<script src="../site.js?v=1795145447" defer></script>
 </body>
 </html>

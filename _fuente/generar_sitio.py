@@ -237,6 +237,7 @@ def head(titulo, desc, raiz=""):
 <link rel="icon" href="{raiz}assets/favicon.svg" type="image/svg+xml">
 {FONTS}
 <link rel="stylesheet" href="{raiz}style.css?v={VER}">
+<script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
 """
@@ -249,6 +250,7 @@ def cabecera(raiz=""):
     <a class="sig" href="{raiz}index.html">Oscar Arnez Loayza</a>
     <nav aria-label="Secciones">
       <a href="{raiz}index.html#trabajo">Trabajo</a>
+      <a href="{raiz}index.html#servicios">Servicios</a>
       <a href="{raiz}index.html#experiencia">Experiencia</a>
       <a href="{raiz}index.html#contacto">Contacto</a>
     </nav>
@@ -271,8 +273,8 @@ def pie(raiz=""):
 def index():
     filas = []
     for p in PROYECTOS:
-        filas.append(f"""      <a class="row" href="proyectos/{p['slug']}.html">
-        <span class="r-title">{escape(p['corto'])}<small>{escape(p['pregunta'])}</small></span>
+        filas.append(f"""      <a class="row reveal" href="proyectos/{p['slug']}.html" data-peek="assets/{p['img']}">
+        <span class="r-title" style="view-transition-name:t-{p['slug']}">{escape(p['corto'])}<small>{escape(p['pregunta'])}</small></span>
         <span class="r-tech">{escape(p['tecnica'])}</span>
         <span class="r-n mono">{escape(p['n'])}</span>
         <span class="r-metric"><b class="mono">{escape(p['metrica'])}</b><small>{escape(p['metrica_label'])}</small></span>
@@ -291,22 +293,23 @@ def index():
 
 <section class="intro">
   <div class="intro-text">
-    <p class="role">Analista de datos</p>
-    <h1>Oscar Arnez Loayza</h1>
-    <p class="lede">Ordeno datos que están dispersos entre planillas, sistemas y bases, y los convierto en reportes y tableros que la gente usa para decidir. Trabajo de forma remota con empresas y organizaciones de Latinoamérica y Estados Unidos.</p>
-    <p>Antes analicé el mercado inmobiliario para NORA (Colombia), apoyé proyectos de DataKind, una ONG de ciencia de datos de Estados Unidos, y automaticé procesos internos en YPFB. Hoy también enseño Python en Algorithmics.</p>
-    <p class="links"><a href="#contacto">Escríbeme</a><a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a><a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a><a href="{WORKANA}" target="_blank" rel="noopener">Workana</a></p>
+    <p class="role" style="--i:0">Analista de datos <span class="avail">· disponible para nuevos proyectos</span></p>
+    <h1 style="--i:1"><span class="ln">Oscar Arnez</span> <span class="ln">Loayza</span></h1>
+    <p class="lede" style="--i:2">Ordeno datos que están dispersos entre planillas, sistemas y bases, y los convierto en reportes y tableros que la gente usa para decidir. Trabajo de forma remota con empresas y organizaciones de Latinoamérica y Estados Unidos.</p>
+    <p style="--i:3">Antes analicé el mercado inmobiliario para NORA (Colombia), apoyé proyectos de DataKind, una ONG de ciencia de datos de Estados Unidos, y automaticé procesos internos en YPFB. Hoy también enseño Python en Algorithmics.</p>
+    <p class="links" style="--i:4"><a class="btn" href="#contacto">Pedir una cotización</a><a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a><a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a><a href="{WORKANA}" target="_blank" rel="noopener">Workana</a></p>
   </div>
   <figure class="portrait">
     <img src="assets/oscar.jpg" alt="Foto de Oscar Arnez Loayza" width="640" height="640">
   </figure>
+  <div class="clients" style="--i:5"><span class="mono">He trabajado con</span><b>NORA</b><b>DataKind</b><b>YPFB</b><b>Algorithmics</b><b>AWS User Group Sucre</b></div>
   <dl class="facts">
-    <div><dt>Base</dt><dd>Sucre, Bolivia · GMT−4</dd></div>
+    <div><dt>Base</dt><dd>Sucre, Bolivia · <span class="clock mono" data-clock>GMT−4</span></dd></div>
     <div><dt>Modalidad</dt><dd>Remoto, por proyecto u horas</dd></div>
     <div><dt>Herramientas</dt><dd>Power BI, Excel, Python, SQL, Tableau</dd></div>
     <div><dt>Idiomas</dt><dd>Español nativo, inglés intermedio</dd></div>
   </dl>
-  <figure class="sorter" id="sorter">
+  <figure class="sorter ruled" id="sorter">
     <div class="sorter-bar">
       <p class="ledger mono" aria-live="polite"><span>registros <b data-k="reg">2.016</b></span><span>duplicados <b data-k="dup">218</b></span><span>clientes únicos <b data-k="uni">1.798</b></span></p>
       <button type="button" class="replay" id="replay">Repetir</button>
@@ -321,7 +324,7 @@ def index():
     <h2>Trabajo seleccionado</h2>
     <p>Seis proyectos con el código y la documentación completos. Usan datos simulados para poder publicarlos sin exponer información de clientes.</p>
   </div>
-  <figure class="quality" id="quality">
+  <figure class="quality ruled reveal" id="quality">
     <div class="q-head">
       <p class="q-title">% de registros con cada campo en formato estándar</p>
       <div class="seg" role="group" aria-label="Estado de la base">
@@ -334,20 +337,38 @@ def index():
     </div>
     <figcaption><span class="mono">Fig. 1</span> {escape(destacado['titulo'])}. Promedio de los seis campos: <b class="mono" data-avg>37 %</b>. <a href="proyectos/{destacado['slug']}.html">Ver el caso completo</a>.</figcaption>
   </figure>
-  <div class="index" role="list">
+  <div class="index ruled" role="list">
     <div class="row head" aria-hidden="true"><span>Proyecto</span><span>Técnica</span><span>Datos</span><span>Resultado</span></div>
 {chr(10).join(filas)}
   </div>
 </section>
 
+<section id="servicios" class="block">
+  <div class="block-head reveal">
+    <h2>Servicios</h2>
+    <p>Precio cerrado por proyecto. Envíame una muestra de tus datos, sin información sensible, y te respondo en menos de 24 horas con alcance, plazo y precio.</p>
+  </div>
+  <div class="table-wrap"><table class="services ruled">
+    <thead><tr><th scope="col">Servicio</th><th scope="col">Qué recibes</th><th scope="col">Plazo típico</th></tr></thead>
+    <tbody>
+      <tr class="reveal"><th scope="row">Limpieza y estandarización de bases</th><td>Base sin duplicados, con formatos unificados y un informe de qué se corrigió</td><td class="mono">1–3 días</td></tr>
+      <tr class="reveal"><th scope="row">Dashboards en Power BI</th><td>Archivo .pbix con modelo de datos, medidas DAX, filtros y una guía de uso</td><td class="mono">3–7 días</td></tr>
+      <tr class="reveal"><th scope="row">Automatización de reportes</th><td>Excel o script de Python que arma el reporte con formato y gráficos en un clic</td><td class="mono">3–7 días</td></tr>
+      <tr class="reveal"><th scope="row">Consultas SQL y análisis</th><td>Consultas documentadas y resultados en Excel o Power BI, con una explicación breve</td><td class="mono">2–4 días</td></tr>
+      <tr class="reveal"><th scope="row">Análisis y modelos predictivos</th><td>Informe con hallazgos y recomendaciones, y el modelo listo para volver a usar</td><td class="mono">5–10 días</td></tr>
+    </tbody>
+  </table></div>
+  <p class="svc-cta reveal"><a class="btn" href="#contacto">Pedir una cotización</a><span>Respuesta en menos de 24 horas, con alcance, plazo y precio.</span></p>
+</section>
+
 <section id="experiencia" class="block">
   <div class="block-head"><h2>Experiencia</h2></div>
-  <ol class="cv">
-    <li><span class="when mono">2025</span><div><h3>Analista de datos · NORA</h3><p class="where">Startup inmobiliaria, Colombia · remoto · sep–oct 2025</p><p>Dashboards en Power BI para seguir el mercado (35 % más eficiente el monitoreo, 25 % más precisión en proyecciones de inversión) y limpieza de bases que redujo las inconsistencias en 40 %.</p></div></li>
-    <li><span class="when mono">2025</span><div><h3>Analista de datos · DataKind</h3><p class="where">ONG de ciencia de datos, Estados Unidos · remoto · mar–jul 2025</p><p>Análisis exploratorio en Python y visualizaciones en Tableau para organizaciones de salud y educación. Presentación de resultados a patrocinadores.</p></div></li>
-    <li><span class="when mono">2024</span><div><h3>Analista de datos · YPFB</h3><p class="where">Empresa estatal de hidrocarburos, Bolivia · jul–nov 2024</p><p>Automatización de procesos internos con Excel y Python, con alrededor de 30 % menos tiempo en tareas repetitivas.</p></div></li>
-    <li><span class="when mono">2025–hoy</span><div><h3>Instructor de Python · Algorithmics Global</h3><p class="where">Edtech, Emiratos Árabes Unidos · remoto</p><p>Clases en línea de programación, con tasas de finalización superiores al 90 %.</p></div></li>
-    <li><span class="when mono">2023–2025</span><div><h3>Instructor y coordinador de adquisiciones · American Space</h3><p class="where">Bolivia</p><p>Comparación de proveedores y cotizaciones, con ahorros de 15 a 20 % en compras.</p></div></li>
+  <ol class="cv ruled">
+    <li class="reveal"><span class="when mono">2025</span><div><h3>Analista de datos · NORA</h3><p class="where">Startup inmobiliaria, Colombia · remoto · sep–oct 2025</p><p>Dashboards en Power BI para seguir el mercado (35 % más eficiente el monitoreo, 25 % más precisión en proyecciones de inversión) y limpieza de bases que redujo las inconsistencias en 40 %.</p></div></li>
+    <li class="reveal"><span class="when mono">2025</span><div><h3>Analista de datos · DataKind</h3><p class="where">ONG de ciencia de datos, Estados Unidos · remoto · mar–jul 2025</p><p>Análisis exploratorio en Python y visualizaciones en Tableau para organizaciones de salud y educación. Presentación de resultados a patrocinadores.</p></div></li>
+    <li class="reveal"><span class="when mono">2024</span><div><h3>Analista de datos · YPFB</h3><p class="where">Empresa estatal de hidrocarburos, Bolivia · jul–nov 2024</p><p>Automatización de procesos internos con Excel y Python, con alrededor de 30 % menos tiempo en tareas repetitivas.</p></div></li>
+    <li class="reveal"><span class="when mono">2025–hoy</span><div><h3>Instructor de Python · Algorithmics Global</h3><p class="where">Edtech, Emiratos Árabes Unidos · remoto</p><p>Clases en línea de programación, con tasas de finalización superiores al 90 %.</p></div></li>
+    <li class="reveal"><span class="when mono">2023–2025</span><div><h3>Instructor y coordinador de adquisiciones · American Space</h3><p class="where">Bolivia</p><p>Comparación de proveedores y cotizaciones, con ahorros de 15 a 20 % en compras.</p></div></li>
   </ol>
   <div class="aside-grid">
     <div><h3>Formación</h3><p>Ingeniería Industrial, Universidad Privada Domingo Savio, 2019–2025.</p></div>
@@ -360,6 +381,7 @@ def index():
   <div class="block-head"><h2>Contacto</h2></div>
   <p class="contact-line">Si tienes una base que ordenar, un reporte que hoy armas a mano o una pregunta que tus datos deberían responder, escríbeme. Respondo en menos de un día con una propuesta, un plazo y un precio.</p>
   <p class="mail"><a href="mailto:{EMAIL}">{EMAIL}</a></p>
+  <p><button type="button" class="copy" data-copy="{EMAIL}">Copiar correo</button></p>
   <p class="links"><a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a><a href="{WORKANA}" target="_blank" rel="noopener">Workana</a><a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a></p>
 </section>
 
@@ -381,7 +403,7 @@ def caso(i, p):
     html += f"""<main class="shell case">
   <p class="back"><a href="../index.html#trabajo">← Trabajo seleccionado</a></p>
   <header class="case-head">
-    <h1>{escape(p['titulo'])}</h1>
+    <h1 style="view-transition-name:t-{p['slug']}">{escape(p['titulo'])}</h1>
     <p class="lede">{escape(p['resumen'])}</p>
     <dl class="meta">
       <div><dt>Pregunta</dt><dd>{escape(p['pregunta'])}</dd></div>
@@ -391,29 +413,29 @@ def caso(i, p):
     </dl>
   </header>
 
-  <figure class="feature wide">
+  <figure class="feature wide zoomable reveal">
     <img src="../assets/{p['img']}" alt="Tablero del proyecto: {escape(p['titulo'])}">
     <figcaption><span class="mono">Fig. 1</span> Tablero generado por el código del proyecto.</figcaption>
   </figure>
 
   <div class="prose">
-    <h2>Contexto</h2>
+    <h2 class="reveal">Contexto</h2>
 {ctx}
-    <h2>Datos</h2>
+    <h2 class="reveal">Datos</h2>
     <p>{escape(p['datos'])}</p>
-    <h2>Qué hice</h2>
+    <h2 class="reveal">Qué hice</h2>
     <ol>
 {pasos}
     </ol>
-    <h2>Resultados</h2>
-    <div class="table-wrap"><table>
+    <h2 class="reveal">Resultados</h2>
+    <div class="table-wrap"><table class="ruled">
 {res}
     </table></div>
-    <h2>Qué recomendaría</h2>
+    <h2 class="reveal">Qué recomendaría</h2>
     <ul>
 {hall}
     </ul>
-    <h2>Extracto del código</h2>
+    <h2 class="reveal">Extracto del código</h2>
     <p class="code-label mono">{escape(p['codigo_archivo'])}</p>
     <pre><code>{escape(p['codigo'])}</code></pre>
     <p><a href="{REPO}{p['carpeta']}" target="_blank" rel="noopener">Ver el proyecto completo en GitHub</a>, con instrucciones para ejecutarlo.</p>
@@ -598,6 +620,104 @@ pre{margin:0;overflow-x:auto;background:var(--tint);border-left:3px solid var(--
 .quality figcaption a{white-space:nowrap}
 @media (max-width:560px){#sorter-canvas{height:260px}.q-row{grid-template-columns:72px minmax(0,1fr) 52px;gap:10px}}
 @media (prefers-reduced-motion:reduce){.q-fill{transition:none}}
+
+/* ===== v3: fondo de papel milimetrado, transiciones y detalles ===== */
+:root{--grid:rgba(31,95,174,.055);--grid-major:rgba(31,95,174,.09)}
+@media (prefers-color-scheme:dark){:root{--grid:rgba(127,176,236,.045);--grid-major:rgba(127,176,236,.075)}}
+body{
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid-major) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  background-position:-1px -1px;
+}
+.top{background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px)}
+.top nav a{position:relative}
+.top nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.top nav a:hover::after{transform:scaleX(1)}
+
+.avail{color:var(--ink-soft)}
+.avail::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#2fa36b;margin:0 6px 1px 4px;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,163,107,.45)}50%{box-shadow:0 0 0 5px rgba(47,163,107,0)}}
+h1 .ln{display:inline-block}
+
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--paper);text-decoration:none;padding:10px 16px;border-radius:3px;font-weight:600;position:relative;overflow:hidden}
+.btn::after{content:"→";transition:transform .25s}
+.btn:hover::after{transform:translateX(4px)}
+.btn:hover{background:var(--accent);color:#fff}
+.links{align-items:center}
+
+.clients{grid-column:1;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;padding-top:4px}
+.clients .mono{font-size:12.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.clients b{font-family:var(--display);font-stretch:85%;font-size:17px;font-weight:700;color:var(--ink-soft);transition:color .2s}
+.clients b:hover{color:var(--ink)}
+.clock{font-size:14px}
+
+/* reglas que se dibujan como el eje de un gráfico */
+.index,.cv,.quality,.sorter,table.ruled,table.services{border-top:0}
+.ruled{position:relative}
+.ruled::before{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:var(--ink);transform-origin:left;transition:transform 1.1s cubic-bezier(.65,0,.35,1)}
+.js .ruled:not(.in)::before{transform:scaleX(0)}
+table.ruled{border-collapse:separate;border-spacing:0}
+
+/* aparición al hacer scroll */
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* secuencia de entrada del hero */
+.js .intro-text>*,.js .clients{animation:rise .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*90ms + 80ms)}
+.js .portrait img{animation:unveil 1.1s cubic-bezier(.65,0,.35,1) .25s both}
+.js .facts{animation:rise .8s cubic-bezier(.2,.7,.2,1) .6s both}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes unveil{from{clip-path:inset(100% 0 0 0);transform:scale(1.06)}to{clip-path:inset(0);transform:none}}
+
+/* servicios */
+table.services{font-size:15.5px}
+table.services thead th{font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);font-weight:400;padding-top:14px}
+table.services tbody th{color:var(--ink);font-weight:600;width:30%;padding-right:24px}
+table.services td{text-align:left;color:var(--ink-soft)}
+table.services td.mono{white-space:nowrap;color:var(--ink);text-align:right}
+table.services tbody tr{transition:background .2s}
+table.services tbody tr:hover{background:var(--tint)}
+.svc-cta{display:flex;align-items:center;flex-wrap:wrap;gap:12px 18px;margin-top:24px;color:var(--ink-soft);font-size:15px}
+
+/* vista previa del tablero al pasar sobre un proyecto */
+.peek{position:fixed;left:0;top:0;width:340px;pointer-events:none;z-index:30;opacity:0;transform:translate(-50%,-50%) scale(.92);transition:opacity .2s,transform .25s;border:1px solid var(--rule);box-shadow:0 18px 40px rgba(0,0,0,.18);background:#f4f3ef}
+.peek.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+@media (hover:none),(max-width:900px){.peek{display:none}}
+a.row .r-title{transition:color .2s,transform .25s}
+a.row:hover .r-title{transform:translateX(4px)}
+
+/* copiar correo */
+.copy{font:500 13.5px var(--mono);background:none;border:1px solid var(--rule);color:var(--ink-soft);padding:6px 12px;border-radius:3px;cursor:pointer}
+.copy:hover{color:var(--ink);border-color:var(--ink-soft)}
+.copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* figura ampliable en casos de estudio */
+.zoomable img{cursor:zoom-in}
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(10,14,18,.86);display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .25s}
+.lightbox.on{opacity:1;pointer-events:auto;cursor:zoom-out}
+.lightbox img{max-width:min(1600px,96vw);max-height:92vh;transform:scale(.96);transition:transform .3s}
+.lightbox.on img{transform:none}
+
+/* transiciones entre páginas (navegadores compatibles) */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vt-out .25s ease both}
+::view-transition-new(root){animation:vt-in .35s ease both}
+@keyframes vt-out{to{opacity:0;transform:translateY(-8px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(10px)}}
+
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .js .intro-text>*,.js .clients,.js .facts,.js .portrait img{animation:none}
+  .ruled::before{transition:none}.js .ruled:not(.in)::before{transform:none}
+  .avail::before{animation:none}
+  @view-transition{navigation:none}
+}
+@media (max-width:560px){table.services tbody th{width:auto}.clients b{font-size:15px}}
 """
 
 FAVICON = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="4" fill="#14191f"/><path d="M9 23V15M16 23V9M23 23V18" stroke="#7fb0ec" stroke-width="3.2" stroke-linecap="square"/></svg>"""

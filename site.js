@@ -54,6 +54,84 @@
     upd();
   }
 
+  /* ---------- aparición al hacer scroll y reglas que se dibujan ---------- */
+  var revealables = document.querySelectorAll(".reveal, .ruled");
+  if (reduce || !("IntersectionObserver" in window)) {
+    revealables.forEach(function (el) { el.classList.add("in"); });
+  } else {
+    var rio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target, sib = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+        el.style.transitionDelay = (el.classList.contains("reveal") ? Math.min(sib, 6) * 70 : 0) + "ms";
+        el.classList.add("in"); rio.unobserve(el);
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    revealables.forEach(function (el) { rio.observe(el); });
+    // red de seguridad: nada queda oculto si el observador falla
+    setTimeout(function () { revealables.forEach(function (el) { el.classList.add("in"); }); }, 6000);
+  }
+
+  /* ---------- hora local en Sucre ---------- */
+  var clock = document.querySelector("[data-clock]");
+  if (clock) {
+    var tick = function () {
+      try {
+        clock.textContent = new Intl.DateTimeFormat("es-BO", { hour: "2-digit", minute: "2-digit", timeZone: "America/La_Paz", hour12: false }).format(new Date()) + " hora local";
+      } catch (e) { clock.textContent = "GMT−4"; }
+    };
+    tick(); setInterval(tick, 30000);
+  }
+
+  /* ---------- vista previa del tablero al pasar sobre un proyecto ---------- */
+  var peekRows = document.querySelectorAll("a.row[data-peek]");
+  if (peekRows.length && matchMedia("(hover: hover)").matches) {
+    var peek = document.createElement("img");
+    peek.className = "peek"; peek.alt = ""; peek.setAttribute("aria-hidden", "true");
+    document.body.appendChild(peek);
+    var px = 0, py = 0, tx = 0, ty = 0, raf = null;
+    var follow = function () {
+      px += (tx - px) * 0.18; py += (ty - py) * 0.18;
+      peek.style.left = px + "px"; peek.style.top = py + "px";
+      raf = Math.abs(tx - px) + Math.abs(ty - py) > 0.5 ? requestAnimationFrame(follow) : null;
+    };
+    peekRows.forEach(function (r) {
+      var src = r.getAttribute("data-peek"); new Image().src = src;
+      r.addEventListener("mouseenter", function (e) {
+        peek.src = src; tx = px = e.clientX + 200; ty = py = e.clientY;
+        peek.classList.add("on"); follow();
+      });
+      r.addEventListener("mousemove", function (e) {
+        tx = Math.min(e.clientX + 200, innerWidth - 180); ty = e.clientY;
+        if (!raf) raf = requestAnimationFrame(follow);
+      });
+      r.addEventListener("mouseleave", function () { peek.classList.remove("on"); });
+    });
+  }
+
+  /* ---------- copiar correo ---------- */
+  document.querySelectorAll("[data-copy]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var ok = function () { b.textContent = "Copiado"; setTimeout(function () { b.textContent = "Copiar correo"; }, 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(b.dataset.copy).then(ok, function () {});
+    });
+  });
+
+  /* ---------- figura ampliable en los casos ---------- */
+  var zoom = document.querySelector(".zoomable img");
+  if (zoom) {
+    var lb = document.createElement("div");
+    lb.className = "lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-label", "Figura ampliada");
+    lb.innerHTML = '<img alt="">';
+    document.body.appendChild(lb);
+    var close = function () { lb.classList.remove("on"); };
+    zoom.addEventListener("click", function (e) {
+      e.preventDefault(); lb.firstChild.src = zoom.currentSrc || zoom.src; lb.firstChild.alt = zoom.alt; lb.classList.add("on");
+    });
+    lb.addEventListener("click", close);
+    addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+  }
+
   /* ---------- cifras que se cuentan al aparecer ---------- */
   document.querySelectorAll(".r-metric b, .case td").forEach(function (el) {
     onView(el, function () { countUp(el, 1000); }, 0.8);
