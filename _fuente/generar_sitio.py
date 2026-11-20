@@ -1,4 +1,5 @@
 """Genera la página profesional (index + casos de estudio) en el repo sub-cre.github.io."""
+import time
 from html import escape
 from pathlib import Path
 
@@ -7,6 +8,7 @@ REPO = "https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/"
 EMAIL = "oscararnez1234@gmail.com"
 LINKEDIN = "https://www.linkedin.com/in/oscar-a-639b09183"
 GITHUB = "https://github.com/Sub-Cre/portafolio-analisis-datos"
+VER = str(int(time.time()))
 WORKANA = "https://www.workana.com/freelancer/303a6967c8c3074f16680fe3aebb4022"
 
 PROYECTOS = [
@@ -234,7 +236,7 @@ def head(titulo, desc, raiz=""):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{raiz}assets/favicon.svg" type="image/svg+xml">
 {FONTS}
-<link rel="stylesheet" href="{raiz}style.css">
+<link rel="stylesheet" href="{raiz}style.css?v={VER}">
 </head>
 <body>
 """
@@ -260,7 +262,7 @@ def pie(raiz=""):
   <span>Oscar Arnez Loayza · Sucre, Bolivia</span>
   <span class="mono">Actualizado en noviembre de 2026</span>
 </footer>
-<script src="{raiz}site.js" defer></script>
+<script src="{raiz}site.js?v={VER}" defer></script>
 </body>
 </html>
 """
