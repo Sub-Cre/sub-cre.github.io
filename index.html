@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oscar Arnez · Analista de Datos</title>
+<meta name="description" content="Analista de datos: dashboards en Power BI, limpieza de datos, automatización de reportes en Excel y Python, SQL y modelos predictivos. Trabajo remoto para empresas de Latinoamérica.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Oscar Arnez · Analista de Datos">
+<meta property="og:description" content="Convierto tus datos en decisiones: dashboards, reportes automatizados, SQL y modelos predictivos.">
+<meta property="og:image" content="https://sub-cre.github.io/assets/preview.jpg">
+<meta property="og:url" content="https://sub-cre.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232a78d6'/%3E%3Cpath d='M8 22v-5M14 22V10M20 22v-8M26 22V6' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#fbfaf7; --ink:#101217; --ink-2:#464a52; --muted:#767a83;
+  --line:#e4e2db; --accent:#2a78d6; --accent-ink:#1d5aa6; --accent-soft:#eaf2fc; --good:#1baf7a; --warm:#eb6834;
+  --shadow:0 1px 2px rgba(16,18,23,.04),0 8px 24px rgba(16,18,23,.06);
+  --radius:16px; --max:1160px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c0e12; --surface:#14171d; --surface-2:#181c23; --ink:#eef0f3; --ink-2:#b4b9c3; --muted:#868c97;
+    --line:#262a33; --accent:#5c9ee8; --accent-ink:#8dbcf1; --accent-soft:#16253a; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0c0e12; --surface:#14171d; --surface-2:#181c23; --ink:#eef0f3; --ink-2:#b4b9c3; --muted:#868c97;
+  --line:#262a33; --accent:#5c9ee8; --accent-ink:#8dbcf1; --accent-soft:#16253a; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}
+.brand .logo{width:30px;height:30px;border-radius:8px;background:var(--accent);display:grid;place-items:center;color:#fff}
+.brand .logo svg{width:18px;height:18px}
+.nav nav{display:flex;gap:26px;font-size:14.5px;color:var(--ink-2)}
+.nav nav a:hover{color:var(--ink)}
+.nav .actions{display:flex;gap:10px;align-items:center}
+.icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--ink-2);cursor:pointer}
+.icon-btn:hover{color:var(--ink)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:11px;font-weight:600;font-size:15px;border:1px solid transparent;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-ink)}
+:root[data-theme="dark"] .btn-primary:hover{color:#0c0e12}
+.btn-ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}
+.btn-sm{padding:8px 14px;font-size:14px}
+
+/* hero */
+.hero{padding:72px 0 56px}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--accent-ink);background:var(--accent-soft);padding:6px 12px;border-radius:999px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 25%,transparent)}
+h1{font-size:clamp(38px,5.4vw,62px);line-height:1.04;letter-spacing:-.035em;font-weight:800;margin:20px 0 18px}
+h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:18.5px;color:var(--ink-2);max-width:560px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 22px}
+.tools-line{display:flex;flex-wrap:wrap;gap:8px;font-size:13px;color:var(--muted)}
+.tools-line span{border:1px solid var(--line);padding:4px 10px;border-radius:8px;background:var(--surface)}
+
+.portrait{position:relative;max-width:420px;justify-self:end;width:100%}
+.portrait .photo{border-radius:24px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);aspect-ratio:1/1.05;background:var(--surface)}
+.portrait .photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.float{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+.float.f1{left:-36px;bottom:34px;width:220px}
+.float.f2{right:-20px;top:26px}
+.float .lbl{font-size:12px;color:var(--muted);font-weight:500}
+.float .val{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.float .val small{font-size:13px;color:var(--good);font-weight:600;margin-left:6px}
+.float svg.spark{width:100%;height:38px;margin-top:6px}
+
+/* stats */
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:28px 24px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat .n{font-size:34px;font-weight:700;letter-spacing:-.03em}
+.stat .t{font-size:14px;color:var(--ink-2);margin-top:2px}
+.stat .s{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+section{padding:88px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:36px;flex-wrap:wrap}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h2{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.03em;line-height:1.1;margin-top:8px;font-weight:800}
+.sec-head p{max-width:460px;color:var(--ink-2)}
+
+/* services */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.card .ic{width:42px;height:42px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:18px}
+.card .ic svg{width:21px;height:21px}
+.card h3{font-size:17px;letter-spacing:-.01em;margin-bottom:8px}
+.card p{font-size:14.5px;color:var(--ink-2)}
+.card ul{list-style:none;margin-top:14px;display:grid;gap:6px;font-size:13.5px;color:var(--ink-2)}
+.card li{display:flex;gap:8px;align-items:flex-start}
+.card li svg{width:16px;height:16px;color:var(--good);margin-top:3px}
+
+/* projects */
+.projects{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.proj{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.proj:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.proj .thumb{aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--line);background:#f4f3ef}
+.proj .thumb img{width:100%;height:100%;object-fit:cover;object-position:top}
+.proj .body{padding:22px 24px 24px;display:flex;flex-direction:column;gap:12px;flex:1}
+.proj .num{font-size:12.5px;color:var(--muted)}
+.proj h3{font-size:20px;letter-spacing:-.02em;line-height:1.25}
+.proj .q{font-size:14.5px;color:var(--ink-2)}
+.proj .res{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}
+.proj .res div{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.proj .res b{display:block;font-size:20px;letter-spacing:-.02em}
+.proj .res span{font-size:12.5px;color:var(--muted);line-height:1.35;display:block}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:12px;font-weight:500;color:var(--ink-2);border:1px solid var(--line);border-radius:7px;padding:3px 9px}
+.proj .link{margin-top:auto;padding-top:6px;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14.5px;color:var(--accent)}
+.proj .link:hover{gap:10px}
+.note{font-size:13.5px;color:var(--muted);margin-top:20px;display:flex;gap:8px;align-items:flex-start}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden}
+.step{padding:26px 24px;border-right:1px solid var(--line)}
+.step:last-child{border-right:0}
+.step .k{font-size:13px;color:var(--accent);font-weight:700}
+.step h3{font-size:17px;margin:10px 0 6px}
+.step p{font-size:14.5px;color:var(--ink-2)}
+
+/* experience */
+.exp-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:start}
+.timeline{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:8px 28px}
+.job{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
+.job:last-child{border-bottom:0}
+.job .when{font-size:13px;color:var(--muted);padding-top:3px}
+.job h3{font-size:17px;letter-spacing:-.01em}
+.job .org{font-size:14px;color:var(--accent-ink);font-weight:600;margin:2px 0 8px}
+.job ul{padding-left:18px;color:var(--ink-2);font-size:14.5px;display:grid;gap:4px}
+.side{display:grid;gap:16px}
+.side h3{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.side h3 svg{color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chips span{font-size:13px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:5px 10px}
+.creds{list-style:none;display:grid;gap:12px}
+.creds li{font-size:14px;color:var(--ink-2);line-height:1.45}
+.creds b{color:var(--ink);font-weight:600;display:block}
+
+/* contact */
+.contact{padding:0 0 88px}
+.cta-box{background:var(--ink);color:var(--bg);border-radius:24px;padding:56px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.cta-box h2{color:var(--bg)}
+.cta-box p{color:color-mix(in srgb,var(--bg) 72%,transparent);margin-top:14px;font-size:17px}
+.cta-links{display:grid;gap:10px}
+.cta-links a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-radius:12px;border:1px solid color-mix(in srgb,var(--bg) 18%,transparent);font-weight:600}
+.cta-links a:hover{background:color-mix(in srgb,var(--bg) 8%,transparent)}
+.cta-links a span{display:flex;align-items:center;gap:10px}
+.cta-links a.main{background:var(--accent);border-color:var(--accent);color:#fff}
+footer{border-top:1px solid var(--line);padding:28px 0;font-size:13.5px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:980px){
+  .hero .wrap,.exp-grid,.cta-box{grid-template-columns:1fr}
+  .portrait{justify-self:start;max-width:360px}
+  .float.f1{left:auto;right:-12px}
+  .grid-4,.steps{grid-template-columns:repeat(2,1fr)}
+  .step:nth-child(2){border-right:0}
+  .step:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .stats .wrap{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .nav nav{display:none}
+}
+@media (max-width:680px){
+  .wrap{padding:0 16px}
+  .hero{padding:44px 0 40px}
+  section{padding:64px 0}
+  .projects,.grid-4,.steps{grid-template-columns:1fr}
+  .step{border-right:0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:0}
+  .job{grid-template-columns:1fr;gap:6px}
+  .timeline{padding:4px 18px}
+  .cta-box{padding:32px 22px}
+  .float.f2{display:none}
+  .float.f1{right:-6px;bottom:18px;width:190px}
+  .nav .actions .btn{display:none}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bar" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M8 17V11"/><path d="M13 17V7"/><path d="M18 17v-4"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+  <symbol id="i-cog" viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><path d="M9 3a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 1 5 3 3 0 0 0 4 3 3 3 0 0 0 3-1V4a3 3 0 0 0-3-1z"/><path d="M15 3a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-1 5 3 3 0 0 1-4 3 3 3 0 0 1-3-1"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7"/><path d="M8 7v.01"/><path d="M12 17v-4a2 2 0 0 1 4 0v4"/><path d="M12 10v7"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M8.2 13.2L7 22l5-3 5 3-1.2-8.8"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v4"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8v.01"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#inicio" class="brand"><span class="logo"><svg class="i"><use href="#i-bar"/></svg></span>Oscar Arnez</a>
+    <nav aria-label="Secciones">
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="actions">
+      <button class="icon-btn" id="theme" aria-label="Cambiar tema"><svg class="i"><use href="#i-moon"/></svg></button>
+      <a class="btn btn-primary btn-sm" href="#contacto">Trabajemos juntos</a>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>Analista de Datos · Disponible para proyectos remotos</span>
+      <h1>Convierto tus datos en <em>decisiones</em>.</h1>
+      <p class="lead">Dashboards en Power BI, reportes que se generan solos en Excel o Python, consultas SQL y modelos predictivos, explicados en el lenguaje de tu negocio.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#proyectos">Ver proyectos <svg class="i"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="https://github.com/Sub-Cre/portafolio-analisis-datos" target="_blank" rel="noopener"><svg class="i"><use href="#i-gh"/></svg>Código en GitHub</a>
+      </div>
+      <div class="tools-line"><span>Power BI</span><span>Python</span><span>SQL</span><span>Excel</span><span>Tableau</span><span>scikit-learn</span></div>
+    </div>
+    <div class="portrait">
+      <div class="photo"><img src="assets/oscar.jpg" alt="Oscar Arnez Loayza, analista de datos" width="640" height="640"></div>
+      <div class="float f2">
+        <div class="lbl">Experiencia en</div>
+        <div class="val">3 países</div>
+      </div>
+      <div class="float f1">
+        <div class="lbl">Calidad de una base de clientes</div>
+        <div class="val mono">97%<small>desde 37%</small></div>
+        <svg class="spark" viewBox="0 0 200 38" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M2 32 L34 30 L66 26 L98 18 L130 12 L162 7 L198 4" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M2 32 L34 30 L66 26 L98 18 L130 12 L162 7 L198 4 L198 38 L2 38Z" fill="var(--accent)" opacity=".1"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="n mono">+35%</div><div class="t">eficiencia en el monitoreo del mercado</div><div class="s">Dashboards Power BI · NORA, Colombia</div></div>
+    <div class="stat"><div class="n mono">-40%</div><div class="t">inconsistencias en los datos</div><div class="s">Limpieza y transformación · NORA</div></div>
+    <div class="stat"><div class="n mono">+30%</div><div class="t">mejor toma de decisiones en ONG aliadas</div><div class="s">Python y Tableau · DataKind, EE. UU.</div></div>
+    <div class="stat"><div class="n mono">-30%</div><div class="t">tiempo en tareas repetitivas</div><div class="s">Automatización Excel + Python · YPFB</div></div>
+  </div>
+</div>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="kicker">Servicios</div><h2>Qué puedo hacer por tu empresa</h2></div>
+      <p>Trabajo por proyecto o por horas, 100% remoto, con avances por etapas y comunicación constante en español.</p>
+    </div>
+    <div class="grid-4">
+      <div class="card"><div class="ic"><svg class="i"><use href="#i-bar"/></svg></div><h3>Dashboards e informes</h3><p>Tableros en Power BI o Tableau con los indicadores que de verdad usas.</p>
+        <ul><li><svg class="i"><use href="#i-check"/></svg>Modelo de datos y medidas DAX</li><li><svg class="i"><use href="#i-check"/></svg>Ventas, finanzas, inventario</li></ul></div>
+      <div class="card"><div class="ic"><svg class="i"><use href="#i-sparkles"/></svg></div><h3>Limpieza de datos</h3><p>Bases sin duplicados y con formatos estándar, listas para usar o migrar.</p>
+        <ul><li><svg class="i"><use href="#i-check"/></svg>Excel, CSV o bases de datos</li><li><svg class="i"><use href="#i-check"/></svg>Reporte de qué se corrigió</li></ul></div>
+      <div class="card"><div class="ic"><svg class="i"><use href="#i-cog"/></svg></div><h3>Automatización</h3><p>Reportes que hoy armas a mano, generados con un clic en Excel o Python.</p>
+        <ul><li><svg class="i"><use href="#i-check"/></svg>Excel con formato y gráficos</li><li><svg class="i"><use href="#i-check"/></svg>Ejecución programada</li></ul></div>
+      <div class="card"><div class="ic"><svg class="i"><use href="#i-brain"/></svg></div><h3>SQL y modelos predictivos</h3><p>Consultas para responder preguntas de negocio y modelos que anticipan resultados.</p>
+        <ul><li><svg class="i"><use href="#i-check"/></svg>Cohortes, RFM, retención</li><li><svg class="i"><use href="#i-check"/></svg>Predicción de abandono</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="proyectos" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="kicker">Portafolio</div><h2>Proyectos con resultados medibles</h2></div>
+      <p>Cada proyecto parte de una pregunta de negocio y termina en recomendaciones concretas. El código y la documentación son públicos.</p>
+    </div>
+    <div class="projects">
+      <article class="proj">
+        <a class="thumb" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/03-limpieza-base-clientes" target="_blank" rel="noopener"><img src="assets/limpieza.jpg" alt="Gráfico de calidad de datos antes y después de la limpieza" loading="lazy"></a>
+        <div class="body">
+          <div class="num mono">03 · Limpieza de datos</div>
+          <h3>Limpieza y estandarización de una base de clientes</h3>
+          <p class="q">Base de un CRM con teléfonos en 6 formatos, ciudades escritas de 5 maneras y clientes repetidos.</p>
+          <div class="res"><div><b class="mono">37% → 97%</b><span>calidad promedio de los campos</span></div><div><b class="mono">218</b><span>duplicados fusionados sin perder datos</span></div></div>
+          <div class="tags"><span>Python</span><span>Pandas</span><span>Regex</span><span>pytest</span></div>
+          <a class="link" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/03-limpieza-base-clientes" target="_blank" rel="noopener">Ver código y documentación <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="thumb" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/04-analisis-sql-ecommerce" target="_blank" rel="noopener"><img src="assets/sql.jpg" alt="Dashboard de e-commerce con retención por cohorte y segmentos RFM" loading="lazy"></a>
+        <div class="body">
+          <div class="num mono">04 · SQL</div>
+          <h3>E-commerce: retención por cohorte y segmentación RFM</h3>
+          <p class="q">¿El negocio crece porque los clientes vuelven? ¿Quiénes son los más valiosos y qué canal los trae?</p>
+          <div class="res"><div><b class="mono">26%</b><span>de los ingresos viene del 11% de los clientes</span></div><div><b class="mono">2x</b><span>más recompra en referidos que en Google Ads</span></div></div>
+          <div class="tags"><span>SQL</span><span>CTEs</span><span>Funciones de ventana</span><span>SQLite</span></div>
+          <a class="link" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/04-analisis-sql-ecommerce" target="_blank" rel="noopener">Ver código y documentación <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="thumb" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/05-prediccion-abandono-clientes" target="_blank" rel="noopener"><img src="assets/churn.jpg" alt="Dashboard del modelo de predicción de abandono" loading="lazy"></a>
+        <div class="body">
+          <div class="num mono">05 · Machine Learning</div>
+          <h3>Predicción de abandono de clientes (churn)</h3>
+          <p class="q">¿A qué clientes debe llamar primero el equipo de retención y por qué se van?</p>
+          <div class="res"><div><b class="mono">0,82</b><span>AUC en datos de prueba</span></div><div><b class="mono">42%</b><span>de los que se van, detectados en el 20% más riesgoso</span></div></div>
+          <div class="tags"><span>scikit-learn</span><span>Validación cruzada</span><span>Explicabilidad</span></div>
+          <a class="link" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/05-prediccion-abandono-clientes" target="_blank" rel="noopener">Ver código y documentación <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="thumb" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/02-reporte-financiero-automatizado" target="_blank" rel="noopener"><img src="assets/finanzas.jpg" alt="Dashboard del reporte financiero automatizado" loading="lazy"></a>
+        <div class="body">
+          <div class="num mono">02 · Automatización</div>
+          <h3>Reporte financiero mensual automatizado</h3>
+          <p class="q">El estado de resultados que se armaba a mano cada mes, generado en Excel con un solo comando.</p>
+          <div class="res"><div><b class="mono">1 comando</b><span>CSV contable a Excel con formato y gráficos</span></div><div><b class="mono">3 hojas</b><span>resumen, estado de resultados y detalle</span></div></div>
+          <div class="tags"><span>Python</span><span>openpyxl</span><span>Excel</span></div>
+          <a class="link" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/02-reporte-financiero-automatizado" target="_blank" rel="noopener">Ver código y documentación <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="thumb" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/01-dashboard-ventas-retail" target="_blank" rel="noopener"><img src="assets/ventas.jpg" alt="Dashboard de ventas y rentabilidad retail" loading="lazy"></a>
+        <div class="body">
+          <div class="num mono">01 · Dashboard</div>
+          <h3>Ventas y rentabilidad de una cadena retail</h3>
+          <p class="q">¿Qué categorías y regiones generan la ganancia y dónde se está perdiendo margen?</p>
+          <div class="res"><div><b class="mono">-6 pp</b><span>de margen en una región por descuentos</span></div><div><b class="mono">21.680</b><span>transacciones en una sola vista</span></div></div>
+          <div class="tags"><span>Python</span><span>Pandas</span><span>Visualización</span></div>
+          <a class="link" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/01-dashboard-ventas-retail" target="_blank" rel="noopener">Ver código y documentación <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="thumb" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/06-mercado-inmobiliario" target="_blank" rel="noopener"><img src="assets/inmobiliario.jpg" alt="Dashboard del mercado inmobiliario" loading="lazy"></a>
+        <div class="body">
+          <div class="num mono">06 · Análisis</div>
+          <h3>Mercado inmobiliario para inversionistas</h3>
+          <p class="q">¿En qué zona conviene invertir según el precio por m² y lo que tarda en venderse una propiedad?</p>
+          <div class="res"><div><b class="mono">-37%</b><span>precio por m² en la periferia</span></div><div><b class="mono">63 días</b><span>en venta, frente a menos de 45 en el centro</span></div></div>
+          <div class="tags"><span>Python</span><span>Pandas</span><span>Real estate</span></div>
+          <a class="link" href="https://github.com/Sub-Cre/portafolio-analisis-datos/tree/main/06-mercado-inmobiliario" target="_blank" rel="noopener">Ver código y documentación <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+    </div>
+    <p class="note"><svg class="i"><use href="#i-info"/></svg>Los proyectos del portafolio usan datos simulados para poder publicar el código completo sin exponer información de clientes. Los resultados de experiencia laboral (arriba) provienen de trabajos reales.</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="kicker">Método</div><h2>Cómo trabajo</h2></div>
+      <p>Sin sorpresas: sabes qué voy a entregar, cuándo y cómo se usa.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="k mono">01</div><h3>Entender la pregunta</h3><p>Definimos juntos qué decisión quieres tomar y qué indicadores la responden.</p></div>
+      <div class="step"><div class="k mono">02</div><h3>Preparar los datos</h3><p>Reviso, limpio y documento cada fuente. Te aviso si algo no cuadra.</p></div>
+      <div class="step"><div class="k mono">03</div><h3>Analizar y visualizar</h3><p>Construyo el dashboard, el reporte o el modelo, con avances que puedes revisar.</p></div>
+      <div class="step"><div class="k mono">04</div><h3>Entregar y explicar</h3><p>Te entrego los archivos, una guía corta y una sesión para resolver dudas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="experiencia" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="kicker">Trayectoria</div><h2>Experiencia</h2></div>
+      <p>Ingeniero industrial. He trabajado con equipos de Bolivia, Colombia, Estados Unidos y Emiratos Árabes Unidos.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="timeline">
+        <div class="job"><div class="when mono">09/2025 – 10/2025</div><div><h3>Analista de Datos</h3><div class="org">NORA · Startup inmobiliaria, Colombia · Remoto</div>
+          <ul><li>Dashboards interactivos en Power BI: +35% de eficiencia en el monitoreo del mercado y +25% de precisión en proyecciones de inversión.</li><li>Procesos de limpieza y transformación que redujeron las inconsistencias en 40%.</li><li>Presentación de hallazgos al equipo directivo.</li></ul></div></div>
+        <div class="job"><div class="when mono">03/2025 – 07/2025</div><div><h3>Analista de Datos</h3><div class="org">DataKind · ONG internacional de ciencia de datos, EE. UU. · Remoto</div>
+          <ul><li>Análisis con Python y Tableau que mejoraron 30% la toma de decisiones de ONG aliadas.</li><li>Análisis exploratorio y técnicas de machine learning: +25% de eficiencia de recursos en programas sociales.</li><li>Presentaciones a patrocinadores de los sectores de salud y educación.</li></ul></div></div>
+        <div class="job"><div class="when mono">07/2024 – 11/2024</div><div><h3>Analista de Datos</h3><div class="org">YPFB · Empresa estatal de hidrocarburos, Bolivia</div>
+          <ul><li>Automatización de procesos con Excel y Python: -30% de tiempo en tareas repetitivas.</li><li>Herramientas de análisis estadístico que aumentaron 25% la productividad del equipo.</li></ul></div></div>
+        <div class="job"><div class="when mono">11/2025 – hoy</div><div><h3>Instructor de Python</h3><div class="org">Algorithmics Global · Edtech, Emiratos Árabes Unidos · Remoto</div>
+          <ul><li>Clases de Python en línea con tasas de finalización superiores al 90%.</li></ul></div></div>
+        <div class="job"><div class="when mono">01/2023 – 03/2025</div><div><h3>Instructor de Programación y Coordinador de Adquisiciones</h3><div class="org">American Space · Bolivia</div>
+          <ul><li>Evaluación de proveedores y cotizaciones con ahorros de 15% a 20% en compras.</li></ul></div></div>
+      </div>
+      <div class="side">
+        <div class="card"><h3><svg class="i"><use href="#i-bar"/></svg>Herramientas</h3>
+          <div class="chips"><span>Power BI</span><span>Tableau</span><span>Excel</span><span>Python</span><span>Pandas</span><span>SQL</span><span>scikit-learn</span><span>Matplotlib</span><span>Google Analytics</span><span>AWS</span><span>Git y GitHub</span></div></div>
+        <div class="card"><h3><svg class="i"><use href="#i-award"/></svg>Certificaciones</h3>
+          <ul class="creds"><li><b>Google Advanced Data Analytics</b>Google</li><li><b>Introducción a la Ciencia de Datos</b>Cisco Networking Academy</li><li><b>Microsoft Excel Intermedio: 93%</b>Evaluación de Workana</li></ul></div>
+        <div class="card"><h3><svg class="i"><use href="#i-cap"/></svg>Educación</h3>
+          <ul class="creds"><li><b>Ingeniería Industrial</b>Universidad Privada Domingo Savio · 2019 – 2025</li></ul></div>
+        <div class="card"><h3><svg class="i"><use href="#i-mic"/></svg>Comunidad y charlas</h3>
+          <ul class="creds"><li><b>Community Lead, AWS Sucre</b>Comunidad respaldada por Amazon Web Services</li><li><b>Expositor en TechConnect Bolivia</b>“Primeros pasos para convertirse en Analista de Datos”, evento respaldado por la Embajada de EE. UU.</li><li><b>Expositor en TEDx Sucre</b>Charla sobre la fuga de cerebros</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="contact">
+  <div class="wrap">
+    <div class="cta-box">
+      <div>
+        <div class="kicker">Contacto</div>
+        <h2>¿Tienes datos que todavía no te dicen nada?</h2>
+        <p>Cuéntame qué decisión quieres tomar y qué datos tienes. Te respondo en menos de 24 horas con una propuesta, un plazo y un precio.</p>
+      </div>
+      <div class="cta-links">
+        <a class="main" href="mailto:oscararnez1234@gmail.com?subject=Proyecto%20de%20an%C3%A1lisis%20de%20datos"><span><svg class="i"><use href="#i-mail"/></svg>oscararnez1234@gmail.com</span><svg class="i"><use href="#i-arrow"/></svg></a>
+        <a href="https://www.linkedin.com/in/oscar-a-639b09183" target="_blank" rel="noopener"><span><svg class="i"><use href="#i-in"/></svg>LinkedIn</span><svg class="i"><use href="#i-ext"/></svg></a>
+        <a href="https://www.workana.com/freelancer/303a6967c8c3074f16680fe3aebb4022" target="_blank" rel="noopener"><span><svg class="i"><use href="#i-brief"/></svg>Perfil en Workana</span><svg class="i"><use href="#i-ext"/></svg></a>
+        <a href="https://github.com/Sub-Cre/portafolio-analisis-datos" target="_blank" rel="noopener"><span><svg class="i"><use href="#i-gh"/></svg>GitHub</span><svg class="i"><use href="#i-ext"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Oscar Arnez Loayza · Sucre, Bolivia</span><span>Analista de Datos · Python · SQL · Power BI</span></div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('theme');
+  function stored(){try{return localStorage.getItem('tema')}catch(e){return null}}
+  function isDark(){var t=root.getAttribute('data-theme'); if(t) return t==='dark'; return window.matchMedia('(prefers-color-scheme: dark)').matches}
+  function paint(){btn.querySelector('use').setAttribute('href', isDark()?'#i-sun':'#i-moon')}
+  var s=stored(); if(s) root.setAttribute('data-theme',s); paint();
+  btn.addEventListener('click',function(){var n=isDark()?'light':'dark'; root.setAttribute('data-theme',n); try{localStorage.setItem('tema',n)}catch(e){} paint()});
+})();
+</script>
+</body>
+</html>
